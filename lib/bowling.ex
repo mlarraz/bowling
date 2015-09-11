@@ -1,14 +1,14 @@
 defmodule Bowling do
 	def score(frames) do
-		add_score(frames, 0)
+		frames |> add_score(0)
 	end
 
 	defp add_score([roll, spare, extra], total) when roll + spare == 10 do
-		add_score([], total + 10 + extra)
+		[] |> add_score(total + 10 + extra)
 	end
 
 	defp add_score([roll, spare|tail], total) when roll + spare == 10 do
-		add_score(tail, total + 10 + List.first(tail))
+		tail |> add_score(total + 10 + (tail |> List.first))
 	end
 
 	defp add_score([10, 10, 10], total) do
@@ -16,11 +16,11 @@ defmodule Bowling do
 	end
 
 	defp add_score([10|tail], total) do
-		add_score(tail, total + 10 + Enum.sum(Enum.take(tail, 2)))
+		tail |> add_score(total + 10 + (tail |> Enum.take(2) |> Enum.sum))
 	end
 
 	defp add_score([roll, spare|tail], total) do
-		add_score(tail, total + roll + spare)
+		tail |> add_score(total + roll + spare)
 	end
 
 	defp add_score([], total) do
